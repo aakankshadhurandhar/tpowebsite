@@ -1,5 +1,6 @@
 import pyrebase
 from django.shortcuts import render
+from django.contrib import auth
 
 # Create your views here.
 config={
@@ -15,15 +16,41 @@ config={
   }
 
 firebase=pyrebase.initialize_app(config)
-auth=firebase.auth()
+authe=firebase.auth()
+database=firebase.database()
 def signin(request):
     return render(request,'signin.html')
 
 
-def postsignin(request):
-    return render(request,'welcome.html')
+def postsign(request):
+    email=request.POST.get('email')
+    passw=request.POST.get('pass')
+    try:
 
 
+        user=authe.sign_in_with_email_and_password(email,passw)
+    except:
+        message="invalid credencials"
+        return render(request,"signin.html",{'mess':message})
 
+    print(user['idToken'])
 
+    session_id=user['idToken']
+    request.session['uid']=str(session_id)
+
+    return render(request,'dashboard.html',{'e':email})
+def logout(request):
+    auth.logout(request)
+    return render(request,'signin.html')
+def signup(request):
+    return render(request,'signup.html')
+def postsignup(request):
+    name=request.POST.get('name')
+    email=request.POST.get('email')
+    passw=request.POST.get('pass')
+    user=authe.create_user_with_email_and_password(email,passw)
+    uid=user['localId']
+    data={"name":name,'status':'1'}
+    database.child("users").child(uid).child("details").set(data)
+    return render(request,'signin.html')
 
