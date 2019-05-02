@@ -187,14 +187,24 @@ iframe {
   overflow: hidden;
 }
 
+.wrap-input101 {
+  width: 100%;
+  position: relative;
 
+}
 /*------------------------------------------------------------------
 [ Form ]*/
 
 .login100-form {
   width: 100%;
 }
+.label-input101 {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  color: #333333;
 
+  padding-left: 7px;
+}
 .login100-form-title {
   display: block;
   font-family: Poppins-Bold;
