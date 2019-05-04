@@ -48,6 +48,10 @@ def postsignup(request):
     name=request.POST.get('name')
     email=request.POST.get('email')
     passw=request.POST.get('pass')
+    unirn=request.POST.get('unirollno')
+    branch=request.POST.get('branch')
+    semester=request.POST.get('semester')
+    classrollno=request.POST.get('crn')
     try:
         user=authe.create_user_with_email_and_password(email,passw)
 
@@ -55,7 +59,7 @@ def postsignup(request):
         message='unable to create account '
         return render(request,'signup.html',{"messg":message})
     uid = user['localId']
-    data = {"name": name, 'status': '1'}
+    data = {"universityrollno":unirn,"name": name,"branch":branch,"semester":semester,"classrollno":classrollno,'email': email}
     database.child("users").child(uid).child("details").set(data)
     return render(request,'signin.html')
 
