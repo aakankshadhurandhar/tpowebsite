@@ -59,3 +59,32 @@ def postsignup(request):
     database.child("users").child(uid).child("details").set(data)
     return render(request,'signin.html')
 
+def profile(request):
+    return render(request,'profile.html')
+
+
+def postprofile(request):
+    sem=request.POST.get('sem')
+    dob=request.POST.get('dob')
+    mob=request.POST.get('mob')
+
+    idtoken= request.session['uid']
+    a=authe.get_account_info(idtoken)
+    a=a['users']
+    a=a[0]
+    a=a['localId']
+    print("info"+str(a))
+
+    data={
+
+
+        "sem":sem,
+        "dob":dob,
+        "mob":mob
+
+    }
+    database.child('users').child(a).child('info').set(data)
+
+
+    return render(request,'dashboard.html')
+

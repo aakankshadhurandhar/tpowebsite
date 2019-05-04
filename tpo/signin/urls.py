@@ -12,9 +12,9 @@ urlpatterns=[
                     path('postsign/',views.postsign),
                     path('logout/',views.logout,name='log'),
                     path('signup/',views.signup,name='signup'),
-                    path('postsignup/',views.postsignup)
-
-
+                    path('postsignup/',views.postsignup),
+                    path('profile/', views.profile,name='profile'),
+                    path('postprofile/',views.postprofile),
 
 
 
